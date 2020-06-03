@@ -23,10 +23,21 @@ export default class AgendaScreen extends Component<State> {
         items={this.state.items}
         loadItemsForMonth={this.loadItems}
         selected={'2017-05-16'}
-        renderItem={this.renderItem}
-        renderEmptyDate={this.renderEmptyDate}
-        rowHasChanged={this.rowHasChanged}
-        showClosingKnob={true}
+        renderItem={this.renderItem.bind(this)}
+        renderEmptyDate={this.renderEmptyDate.bind(this)}
+        rowHasChanged={this.rowHasChanged.bind(this)}
+        showWeekNumbers
+        staticHeaderOnCollapseView={
+          {
+            style: {
+              textTransform: 'uppercase',
+              fontWeight: 'bold'
+            },
+            enableMonthText: true,
+            monthFormat: 'MMMM yyyy',
+            text: 'Title'
+          }
+        }
         // markingType={'period'}
         // markedDates={{
         //    '2017-05-08': {textColor: '#43515c'},
@@ -86,8 +97,13 @@ export default class AgendaScreen extends Component<State> {
     return (
       <TouchableOpacity
         testID={testIDs.agenda.ITEM}
+<<<<<<< HEAD:example/src/screens/agendaScreen.tsx
         style={[styles.item, {height: reservation.height}]}
         onPress={() => Alert.alert(reservation.name)}
+=======
+        style={[styles.item, {height: item.height}]}
+        onPress={() => Alert.alert(item.name)}
+>>>>>>> 343d86db (New feature, title above the weeks on collapsing view.):example/src/screens/agenda.js
       >
         <Text style={{fontSize, color}}>{reservation.name}</Text>
       </TouchableOpacity>
