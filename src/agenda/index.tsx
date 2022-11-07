@@ -2,9 +2,11 @@ import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import memoize from 'memoize-one';
+import isEmpty from 'lodash/isEmpty';
 
 import React, {Component} from 'react';
 import {
+  Text,
   View,
   Dimensions,
   Animated,
@@ -85,7 +87,15 @@ export default class Agenda extends Component<AgendaProps, State> {
     renderList: PropTypes.func,
     selected: PropTypes.any, //TODO: Should be renamed 'selectedDay' and inherited from ReservationList
     hideKnob: PropTypes.bool,
-    showClosingKnob: PropTypes.bool
+    showClosingKnob: PropTypes.bool,
+    staticHeaderOnCollapseView: PropTypes.shape({
+      style: PropTypes.object,
+      month: PropTypes.shape({
+        enable: PropTypes.bool,
+        format: PropTypes.string
+      }),
+      customText: PropTypes.string
+    })
   };
 
   private style: {[key: string]: ViewStyle};
@@ -402,28 +412,53 @@ export default class Agenda extends Component<AgendaProps, State> {
     return this.props.showWeekNumbers && <View style={this.style.dayHeader}/>;
   };
 
+  renderStaticHeader = (collapseViewAnimation) => {
+    const {staticHeaderOnCollapseView} = this.props;
+    if (isEmpty(staticHeaderOnCollapseView)) {
+      return null;
+    }
+
+    const {selectedDay} = this.state;
+    const {customText, style, month} = staticHeaderOnCollapseView;
+
+    if ((isEmpty(month) || !month.enable) && !customText) {
+      return null;
+    }
+
+    const format = month.format ? month.format : 'MMMM';
+
+    const headerText = month.enable ? selectedDay.toString(format) : customText;
+    return (
+      <Animated.View style={collapseViewAnimation}>
+        {<Text style={[this.style.staticHeader, style]}>
+          {headerText}
+        </Text>}
+      </Animated.View>
+    );
+  }
+
   render() {
-    const {hideKnob, style, testID} = this.props;
+    const {hideKnob, style1, testID} = this.props;
     const agendaHeight = this.initialScrollPadPosition();
-    const weekdaysStyle = [
-      this.style.weekdays,
-      {
-        opacity: this.state.scrollY.interpolate({
-          inputRange: [agendaHeight - HEADER_HEIGHT, agendaHeight],
-          outputRange: [0, 1],
+    const style = {...style1, flex:1};
+
+    const collapseViewAnimation = {
+      opacity: this.state.scrollY.interpolate({
+        inputRange: [agendaHeight - HEADER_HEIGHT, agendaHeight],
+        outputRange: [0, 1],
+        extrapolate: 'clamp'
+      }),
+      transform: [{
+        translateY: this.state.scrollY.interpolate({
+          inputRange: [Math.max(0, agendaHeight - HEADER_HEIGHT), agendaHeight],
+          outputRange: [-HEADER_HEIGHT, 0],
           extrapolate: 'clamp'
-        }),
-        transform: [
-          {
-            translateY: this.state.scrollY.interpolate({
-              inputRange: [Math.max(0, agendaHeight - HEADER_HEIGHT), agendaHeight],
-              outputRange: [-HEADER_HEIGHT, 0],
-              extrapolate: 'clamp'
-            })
-          }
-        ]
-      }
-    ];
+        })
+      }] 
+    };
+    
+    const weekdaysStyle = [this.style.weekdays, collapseViewAnimation];
+
     const headerTranslate = this.state.scrollY.interpolate({
       inputRange: [0, agendaHeight],
       outputRange: [agendaHeight, 0],
@@ -457,8 +492,11 @@ export default class Agenda extends Component<AgendaProps, State> {
       height: KNOB_HEIGHT,
       top: scrollPadPosition,
     };
+    const styleFlex={flex:1};
 
     return (
+      <View style={styleFlex}>
+      {this.renderStaticHeader(collapseViewAnimation)}
       <View testID={testID} onLayout={this.onLayout} style={[style, this.style.container]}>
         <View style={this.style.reservations}>{this.renderReservations()}</View>
         <Animated.View style={headerStyle}>
@@ -491,6 +529,7 @@ export default class Agenda extends Component<AgendaProps, State> {
             onLayout={this.onScrollPadLayout}
           />
         </Animated.ScrollView>
+      </View>
       </View>
     );
   }
