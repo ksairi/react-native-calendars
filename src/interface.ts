@@ -20,7 +20,7 @@ export function xdateToData(date: XDate | string) {
 }
 
 export function parseDate(d?: any) {
-  if (!d) {
+  if (!d || d === undefined) {
     return;
   } else if (d.timestamp) {
     // conventional data timestamp
@@ -42,6 +42,10 @@ export function parseDate(d?: any) {
 }
 
 export function toMarkingFormat(d: XDate) {
+  if (d === undefined) {
+    return 'Invalid Date';
+  }
+
   if (!isNaN(d.getTime())) {
     const year = `${d.getFullYear()}`;
     const month = d.getMonth() + 1;

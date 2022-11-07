@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import * as defaultStyle from '../style';
 import platformStyles from './platform-style';
 import {Theme} from '../types';
+import {monthTextColor} from '../style';
 
 export default function styleConstructor(theme: Theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
@@ -51,6 +52,12 @@ export default function styleConstructor(theme: Theme = {}) {
       position: 'absolute',
       width: '100%',
       alignSelf: 'center'
+    },
+    staticHeader: {
+      textAlign: 'center',
+      paddingTop: 20,
+      fontSize: 16,
+      color: monthTextColor
     },
     // @ts-expect-error
     ...(theme['stylesheet.agenda.main'] || {})
