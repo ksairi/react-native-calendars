@@ -432,7 +432,6 @@ export default class Agenda extends Component<AgendaProps, State> {
   render() {
     const {hideKnob, testID} = this.props;
     const agendaHeight = this.initialScrollPadPosition();
-    const style = {flex: 1};
 
     const collapseViewAnimation = {
       opacity: this.state.scrollY.interpolate({
@@ -486,12 +485,12 @@ export default class Agenda extends Component<AgendaProps, State> {
       height: KNOB_HEIGHT,
       top: scrollPadPosition
     };
-    const styleFlex = {flex: 1};
+    const styleFlex = {flex: 1, backgroundColor: '#ffffff'};
 
     return (
       <View style={styleFlex}>
         {this.renderStaticHeader(collapseViewAnimation)}
-        <View testID={testID} onLayout={this.onLayout} style={[style, this.style.container]}>
+        <View testID={testID} onLayout={this.onLayout} style={[styleFlex, this.style.container]}>
           <View style={this.style.reservations}>{this.renderReservations()}</View>
           <Animated.View style={headerStyle}>
             <Animated.View style={[this.style.animatedContainer, {transform: [{translateY: contentTranslate}]}]}>
