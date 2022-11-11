@@ -32,14 +32,14 @@ export default function styleConstructor(theme: Theme = {}) {
       borderRadius: 16
     },
     today: {
-      backgroundColor: appStyle.todayBackgroundColor,
+      backgroundColor: appStyle.selectedDayBackgroundColor,
       borderRadius: 16
     },
     todayText: {
-      color: appStyle.todayTextColor
+      color: appStyle.selectedDayTextColor
     },
     selectedText: {
-      color: appStyle.selectedDayTextColor
+      color: appStyle.dayTextColor,
     },
     disabledText: {
       color: appStyle.textDisabledColor

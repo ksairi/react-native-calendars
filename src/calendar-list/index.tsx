@@ -180,7 +180,7 @@ const CalendarList = (props: CalendarListProps, ref: any) => {
     (date: XDate | string) => {
       const scrollTo = parseDate(date);
       const diffMonths = Math.round(initialDate?.current?.clone().setDate(1).diffMonths(scrollTo?.clone().setDate(1)));
-      const scrollAmount = calendarSize * pastScrollRange + diffMonths * calendarSize;
+      const scrollAmount = calendarSize *  (pastScrollRange === 0 ? 1 : pastScrollRange)  + diffMonths * calendarSize;
 
       if (scrollAmount !== 0) {
         // @ts-expect-error

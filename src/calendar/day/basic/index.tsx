@@ -76,13 +76,7 @@ const BasicDay = (props: BasicDayProps) => {
   const getContainerStyle = () => {
     const {customStyles, selectedColor} = _marking;
     const styles = [style.current.base];
-
-    if (isSelected) {
-      styles.push(style.current.selected);
-      if (selectedColor) {
-        styles.push({backgroundColor: selectedColor});
-      }
-    } else if (isToday) {
+    if (isToday) {
       styles.push(style.current.today);
     }
 
@@ -101,17 +95,19 @@ const BasicDay = (props: BasicDayProps) => {
     const {customStyles, selectedTextColor} = _marking;
     const styles = [style.current.text];
 
-    if (isSelected) {
+    if (isSelected && !isToday) {
       styles.push(style.current.selectedText);
       if (selectedTextColor) {
         styles.push({color: selectedTextColor});
       }
     } else if (isDisabled) {
       styles.push(style.current.disabledText);
-    } else if (isToday) {
-      styles.push(style.current.todayText);
     } else if (isInactive) {
       styles.push(style.current.inactiveText);
+    }
+
+    if (isToday) {
+      styles.push(style.current.todayText);
     }
 
     //Custom marking type

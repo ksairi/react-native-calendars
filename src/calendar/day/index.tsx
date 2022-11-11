@@ -63,6 +63,7 @@ const Day = React.memo((props: DayProps) => {
 
   const getAccessibilityLabel = useMemo(() => {
     const today = getDefaultLocale().today || 'today';
+
     const formatAccessibilityLabel = getDefaultLocale().formatAccessibilityLabel || 'dddd d MMMM yyyy';
 
     return `${_isToday ? today : ''} ${_date?.toString(formatAccessibilityLabel)} ${markingAccessibilityLabel}`;
@@ -70,10 +71,10 @@ const Day = React.memo((props: DayProps) => {
 
   const Component = dayComponent || (markingType === 'period' ? PeriodDay : BasicDay);
   const dayComponentProps = dayComponent ? {date: xdateToData(date || new XDate())} : undefined;
-
+  const newProps = {...props, state:_isToday ? 'today': props.state}
   return (
     //@ts-expect-error
-    <Component {...props} accessibilityLabel={getAccessibilityLabel} {...dayComponentProps}>
+    <Component {...newProps} accessibilityLabel={getAccessibilityLabel} {...dayComponentProps}>
       {formatNumbers(_date?.getDate())}
     </Component>
   );
