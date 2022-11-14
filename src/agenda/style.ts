@@ -11,7 +11,8 @@ export default function styleConstructor(theme: Theme = {}) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      paddingTop:10
     },
     animatedContainer: {
       flex: 1
@@ -30,7 +31,7 @@ export default function styleConstructor(theme: Theme = {}) {
       position: 'absolute',
       left: 0,
       right: 0,
-      height: 24,
+      height: 20,
       bottom: 0,
       alignItems: 'center',
       backgroundColor: appStyle.calendarBackground
@@ -41,11 +42,11 @@ export default function styleConstructor(theme: Theme = {}) {
       fontSize: appStyle.textDayHeaderFontSize,
       fontFamily: appStyle.textDayHeaderFontFamily,
       fontWeight: appStyle.textDayHeaderFontWeight,
-      color: appStyle.textSectionTitleColor
+      color: appStyle.textSectionTitleColor,
     },
     reservations: {
       flex: 1,
-      marginTop: 104,
+      marginTop: 124,
       backgroundColor: appStyle.reservationsBackgroundColor || appStyle.backgroundColor //TODO: remove 2nd in V2
     },
     scrollPadStyle: {

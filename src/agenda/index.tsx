@@ -30,7 +30,7 @@ import CalendarList, {CalendarListProps, CalendarListImperativeMethods} from '..
 import ReservationList, {ReservationListProps}  from './reservation-list';
 
 
-const HEADER_HEIGHT = 104;
+const HEADER_HEIGHT = 124;
 const KNOB_HEIGHT = 24;
 
 export type AgendaProps = CalendarListProps & ReservationListProps & {
@@ -426,11 +426,10 @@ export default class Agenda extends Component<AgendaProps, State> {
 
     const format = month.format ? month.format : 'MMMM';
 
-    const headerText = month.enable ? selectedDay.toString(format) : customText;
+    const headerText = month.enable ? selectedDay.toString(format).toUpperCase() : customText.toUpperCase();
     //const headerStyleCustom = {"color": "#2d4150", "fontSize": 16, "paddingLeft": 15, "textAlign": "left"}
     //const headerStyleCustom = {"color": "#2d4150", "fontSize": 16,"paddingTop": 0, "textAlign": "center", backgroundColor: "#cccccc"}
     const headerStyleCustom = {"color": "#2d4150", "fontSize": 16,"paddingTop": 0, "textAlign": "center"}
-//-top:30
     return (
       <Animated.View style={collapseViewAnimation}>
         {<Text style={headerStyleCustom}>
@@ -497,7 +496,7 @@ export default class Agenda extends Component<AgendaProps, State> {
     };
  // const styleFlex={overflow: 'hidden', backgroundColor: "#ffffff"};
 
-  const customHeaderStyle = {top: -4, marginTop:0, left:"32%", position:"absolute"};
+  const customHeaderStyle = {top: 10, marginTop:0, left:"32%", position:"absolute"};
   const mainViewStyle = {...this.style.container};
 
 

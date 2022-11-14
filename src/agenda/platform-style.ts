@@ -19,7 +19,7 @@ export default function platformStyles(appStyle: Theme) {
       justifyContent: 'space-between',
       paddingLeft: 24,
       paddingRight: 24,
-      paddingTop: 15,
+      paddingTop: 40, //Space between Month & Weekdays
       paddingBottom: 7,
       backgroundColor: appStyle.calendarBackground
     }
