@@ -155,8 +155,11 @@ const CalendarList = (props: CalendarListProps, ref: any) => {
   const scrollToDay = (date: XDate | string, offset: number, animated: boolean) => {
     const scrollTo = parseDate(date);
     const diffMonths = Math.round(initialDate?.current?.clone().setDate(1).diffMonths(scrollTo?.clone().setDate(1)));
-    let scrollAmount =
+/*     let scrollAmount =
       calendarSize * (pastScrollRange === 0 ? 1 : pastScrollRange) + diffMonths * calendarSize + (offset || 0);
+ */
+      let scrollAmount =
+      calendarSize * pastScrollRange + diffMonths * calendarSize + (offset || 0);
 
     if (!horizontal) {
       let week = 0;
@@ -180,8 +183,8 @@ const CalendarList = (props: CalendarListProps, ref: any) => {
     (date: XDate | string) => {
       const scrollTo = parseDate(date);
       const diffMonths = Math.round(initialDate?.current?.clone().setDate(1).diffMonths(scrollTo?.clone().setDate(1)));
-      const scrollAmount = calendarSize *  (pastScrollRange === 0 ? 1 : pastScrollRange)  + diffMonths * calendarSize;
-
+      //const scrollAmount = calendarSize *  (pastScrollRange === 0 ? 1 : pastScrollRange)  + diffMonths * calendarSize;
+      const scrollAmount = calendarSize *  pastScrollRange  + diffMonths * calendarSize;
       if (scrollAmount !== 0) {
         // @ts-expect-error
         list?.current?.scrollToOffset({offset: scrollAmount, animated: animateScroll});
